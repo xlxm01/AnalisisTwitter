@@ -1,4 +1,4 @@
-# AnalisisTwitter}
+# AnalisisTwitter
 Este es mi segundo proyecto con RStudio. Esta vez vincule RStudio cloud directamente con mi repositorio en GitHub, usando la URL.
 
 En este proyecto estoy aprendiendo que es el ciclo de la ciencia de datos y como importar, transformar, calcular métricas y visualizar datos de Twitter con R.
