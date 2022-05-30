@@ -31,10 +31,23 @@ fl_nadalacademy = get_followers(user = usuario,
               n = 65000)
 View (fl_nadalacademy)
 
-#get_friends: devuelve ids de las personas que yo sigo
+#get_friends: devuelve ids de las personas que yo sigo. limite 5000 cada 15 minutos
+
+friends_nadalacademy = get_friends(user = usuario,
+                                   n = 300)
+View(friends_nadalacademy)
 
 #get_favorites: devuelve la lista de favoritos que marco un usuario 
-#limite 3200 cantidad de favoritos, sin importar el periodo de tiempo
+#limite 3000 cantidad de favoritos, sin importar el periodo de tiempo
+#?get_favorites
+
+usuario = "RafaelNadal"
+fv_nadal = get_favorites(usuario,
+                         n = 1000)
+View(fv_nadal)
 
 #users_data: permite descargar datos de los usuarios
 #localizacion, fecha creacion de cuenta, nro de seguidos, nro de amigos, nombre, 
+#?users_data
+us_data_nadal = users_data(fv_nadal)
+View(us_data_nadal)
