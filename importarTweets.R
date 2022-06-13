@@ -52,3 +52,42 @@ View(fv_nadal)
 us_data_nadal = users_data(fv_nadal)
 View(us_data_nadal)
 
+#contamos los favoritos de nadal
+bdOrdenada = fv_nadal %>%
+  count(screen_name)%>%
+  arrange(desc(n))
+
+###tidyng - ordenar
+#guardar los 5 primeros con mas favoritos
+top5 = fv_nadal %>%
+  count(screen_name)%>%
+  arrange(desc(n))%>%
+  head(5)
+
+###mapping
+grafico = ggplot(data = top5,
+                 mapping = aes(x = reorder(screen_name,n),
+                               y = n)) 
+
+###geometria de puntos
+grafico = grafico + geom_point()
+
+###labels
+grafico = grafico + labs(title = "Usuarios favoritos de Rafa Nadal?",
+                         y = "Cantidad de likes",
+                         x = "Usuario de twiteer")
+###dibujar
+grafico
+
+###geometria barra
+grafico_bar = grafico_bar + geom_bar(stat = "identity", #igual a n
+                                 fill = "red3") #rellena el area con un color
+
+###labels
+grafico_bar = grafico_bar + labs(title = "TPo 5 Usuarios favoritos de Rafa Nadal",
+                         y = "Cantidad de likes",
+                         x = "Usuario de twiteer")
+###dibujar
+grafico_bar + theme_bw()
+grafico_bar + theme_classic()
+grafico_bar + theme_dark()

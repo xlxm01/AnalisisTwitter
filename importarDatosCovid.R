@@ -2,7 +2,7 @@
 library(rtweet)
 library(tidyverse)
 
-#importar datos covid19
+###Importar datos covid19
 tw = search_tweets(q = "covid19",
                    n = 10000)
 
@@ -15,4 +15,20 @@ glimpse(tw)
 #filtrar tweets en español
 tw_es = tw %>% filter(lang == "es")
 
+#contar cuantos tweets hay de cada screen_name
+#forma 1
+tw_es %>%
+  count(screen_name)%>%
+  arrange(desc(n)) #ordenamos el que mas escribio primero
+#forma 2
+tw_es %>% 
+  group_by(screen_name) %>%
+  summarise(numero_ocurrencias = n())
+
+#observamos en todos los tweets el q mas escribio
+tw %>%
+  count(screen_name)%>%
+  arrange(desc(n))
+
+###Analisis de datos
 view(tw_es)
