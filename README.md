@@ -11,4 +11,7 @@ Luego transformar, Visualizar y Calcular Métricas sobre los datos de redes soci
 
 Librerias para Twitter:
 
-install.packages("rtweet")
+install.packages("rtweet") para importar datos de twitter
+install.package("tidyverse") para ordenar, contar, transformar datos
+install.package("ggplot2") para graficar
+install.package("lubridate")
