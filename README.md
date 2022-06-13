@@ -14,4 +14,4 @@ Librerias para Twitter:
 install.packages("rtweet") para importar datos de twitter
 install.package("tidyverse") para ordenar, contar, transformar datos
 install.package("ggplot2") para graficar
-install.package("lubridate")
+install.package("lubridate") para trabajar con fechas
