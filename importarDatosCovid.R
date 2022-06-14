@@ -15,7 +15,7 @@ glimpse(tw)
 #filtrar tweets en español
 tw_es = tw %>% filter(lang == "es")
 
-#contar cuantos tweets hay de cada screen_name
+#contar cuantos tweets hay de cada usuario
 #forma 1
 tw_es %>%
   count(screen_name)%>%
@@ -30,5 +30,4 @@ tw %>%
   count(screen_name)%>%
   arrange(desc(n))
 
-###Analisis de datos
 view(tw_es)
