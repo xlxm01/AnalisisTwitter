@@ -5,6 +5,8 @@ getwd()
 
 #cargar las librerias
 library(rtweet)
+library(tidyverse)
+library(lubridate)
 
 #para buscar ayuda en la consola escribes
 #?seach_tweets, limite 18000 cada 15 minnutos
@@ -91,3 +93,36 @@ grafico_bar = grafico_bar + labs(title = "TPo 5 Usuarios favoritos de Rafa Nadal
 grafico_bar + theme_bw()
 grafico_bar + theme_classic()
 grafico_bar + theme_dark()
+
+
+####Numero de tweets favoritos por año
+tw_es_por_anio = fv_nadal %>%
+  mutate (fecha = ymd_hms(created_at)) %>%  #agrego una columna llamada fecha
+  mutate (fecha = format(fecha, "%Y")) %>%  #cambia el formato se queda solo con año
+  select (created_at, fecha) %>%  #selecciona las dos columnas
+  count(fecha)%>%                    #cuenta o agrupa por mismo año
+  ungroup()
+#grafica  
+graf_por_anio = ggplot(data = tw_es_por_anio,
+                       mapping = aes(x = fecha,
+                                     y = n))
+#grafico de barras
+graf_por_anio = graf_por_anio + geom_bar(stat = "identity",
+                                         fill = "blue3")
+graf_por_anio = graf_por_anio + labs(title = "Cant likes de Rafa Nadal",
+                                     y = "Cant de likes",
+                                     x = "Año")
+graf_por_anio + theme_classic()
+
+#grafico de lineas
+graf_por_anio = ggplot(data = tw_es_por_anio,
+                       mapping = aes(x = fecha,
+                                     y = n,
+                                     group = 1)) #soluciona error only one observation
+                       
+graf_por_anio = graf_por_anio + geom_line(col = "red3")
+graf_por_anio = graf_por_anio + labs(title = "Favoritos por año",
+                                     subtitle = "Rafa Nadal",
+                                     y = "Cant de likes",
+                                     x = "Año")
+graf_por_anio
