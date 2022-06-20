@@ -8,10 +8,18 @@ library(tidyr) #Permite ordenar datos sucios
 tw = search_tweets(q = "covid19",
                    n = 10000)
 
+##otro ejemplo para importar
+#tw_futbol = search_tweets(q = "futbol",
+#                   n = 18000,
+#                   lang = "es",
+#                   include_rts = FALSE)
+
+
+
 #ver los datos
 View(tw)
 
-#te muestra estructura y algunos datos de tu dataframe
+#te muestra estructura, tipo d edatos y algunos datos de tu dataframe
 glimpse(tw)
 
 #filtrar tweets en español
@@ -34,7 +42,10 @@ tw %>%
 
 view(tw_es)
 
-#hashtags mas comunes
+#####Ejemplo filtrar una columna por id
+#aux_tw = tw_futbol %>% filter(status.id = "36536") 
+
+######hashtags mas comunes
 #la columna hashtags es de tipo de dato lista
 ht_mas_comunes = tw %>%
     select(hashtags)%>% #selecciono la columna hashtags
@@ -45,3 +56,20 @@ ht_mas_comunes = tw %>%
     arrange(desc(n))%>% # ordenamos en forma descendiente
     head(20) #seleccione las 20 primeras, las mas usadas
 
+#graficar
+# 1. mapping
+g = ggplot(ht_mas_comunes,
+           mapping = aes(x = reorder(hashtags,n), #el eje x ordenado segun el valor de n, de menor a mayor
+               y = n)) 
+
+#2. agrego geometria con la funcion geom_bar para grafico de barra horizontales
+#tabula la cantidad de veces que ocurre un evento. La altura de las barras representa el número de observaciones
+g = g + geom_bar(stat = "identity") +
+  coord_flip() #indico que las barras sean horizontales
+
+#3. agrego etiquetas
+g = g + labs(title = "Las 20 hashtags mas usadas",
+             x = "hashtags",
+             y = "nro de veces")
+#veo grafico
+g
