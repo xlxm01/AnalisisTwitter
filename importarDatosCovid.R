@@ -1,6 +1,8 @@
 #cargar las librerias
-library(rtweet)
-library(tidyverse)
+library(rtweet) #Para importar tweets
+library(tidyverse) #Para transformar datos mutate, filter, select
+library(tidytext)#Para manejar texto unnest
+library(tidyr) #Permite ordenar datos sucios
 
 ###Importar datos covid19
 tw = search_tweets(q = "covid19",
@@ -31,3 +33,15 @@ tw %>%
   arrange(desc(n))
 
 view(tw_es)
+
+#hashtags mas comunes
+#la columna hashtags es de tipo de dato lista
+ht_mas_comunes = tw %>%
+    select(hashtags)%>% #selecciono la columna hashtags
+    unnest(hashtags)%>% #separa los elementos de una lista
+    mutate(hashtags = toupper(hashtags))%>% #convierto la hashtags en mayusculas
+    filter(!is.na(hashtags))%>% #filtra todos los hasgtags q no son NA (asi se coloca cuando el tweet no tiene ningun
+    count(hashtags)%>% #rdo tabla con 2 columnas cuenta cunatas veces se repite las hashtags
+    arrange(desc(n))%>% # ordenamos en forma descendiente
+    head(20) #seleccione las 20 primeras, las mas usadas
+
