@@ -81,11 +81,11 @@ g
 tw_user = users_data(tw_es)
 view(tw_user)
 #armo un df con anio de creacion y frecuencia
-tw_user = tw_user %>%
+tw_user_anio = tw_user %>%
   distinct(user_id, account_created_at) %>% #te devuelve filas distintas, q no se repitan
   select(account_created_at) %>%
   #mutate(anio = yms_hms(account_created_at)) %>% #convierte la col en una fecha, no hace falta porque ya es
   mutate(anio = account_created_at %>% format("%Y")) %>% #me quedo solo con el año de nacimiento de la cuenta
   count(anio) #me genera una tabla 1 col es nac y la otra es n cant de cuentas creadas del mismo año
 
-view(tw_user)
+view(tw_user_anio)
