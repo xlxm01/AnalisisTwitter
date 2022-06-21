@@ -3,6 +3,7 @@ library(rtweet) #Para importar tweets
 library(tidyverse) #Para transformar datos mutate, filter, select
 library(tidytext)#Para manejar texto unnest
 library(tidyr) #Permite ordenar datos sucios
+library(lubridate) #para formato de fechas
 
 ###Importar datos covid19
 tw = search_tweets(q = "covid19",
@@ -73,3 +74,18 @@ g = g + labs(title = "Las 20 hashtags mas usadas",
              y = "nro de veces")
 #veo grafico
 g
+
+###Perfil de usuario - fecha de creacion de las cuentas de usuario de los tweets descargados
+
+# descargo los usuarios de los tweets
+tw_user = users_data(tw_es)
+view(tw_user)
+#armo un df con anio de creacion y frecuencia
+tw_user = tw_user %>%
+  distinct(user_id, account_created_at) %>% #te devuelve filas distintas, q no se repitan
+  select(account_created_at) %>%
+  #mutate(anio = yms_hms(account_created_at)) %>% #convierte la col en una fecha, no hace falta porque ya es
+  mutate(anio = account_created_at %>% format("%Y")) %>% #me quedo solo con el año de nacimiento de la cuenta
+  count(anio) #me genera una tabla 1 col es nac y la otra es n cant de cuentas creadas del mismo año
+
+view(tw_user)
