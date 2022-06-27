@@ -89,3 +89,17 @@ tw_user_anio = tw_user %>%
   count(anio) #me genera una tabla 1 col es nac y la otra es n cant de cuentas creadas del mismo año
 
 view(tw_user_anio)
+
+##graficar
+p = ggplot(data = tw_user_anio,
+           mapping = aes(x = anio,
+                         y = n))
+p = p + 
+  geom_bar(stat = "identity") +
+  labs(title = "Cuentas creadas por año",
+       x = "Año",
+       y = "Cant cuentas creadas")
+
+p
+
+

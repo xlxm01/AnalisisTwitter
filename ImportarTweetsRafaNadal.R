@@ -7,6 +7,7 @@ getwd()
 library(rtweet)
 library(tidyverse)
 library(lubridate)
+library(VennDiagram)
 
 #para buscar ayuda en la consola escribes
 #?seach_tweets, limite 18000 cada 15 minnutos
@@ -126,3 +127,26 @@ graf_por_anio = graf_por_anio + labs(title = "Favoritos por año",
                                      y = "Cant de likes",
                                      x = "Año")
 graf_por_anio
+
+
+#### Comparación entre dos cuentas de twitter
+
+###Importamos datos
+#amigos de usuario de twitter RafaNadal (son los usuarios a los que sigue RN)
+amigos_nadal  = get_friends("RafaelNadal")
+#seguidores de Rafa Nadal (son los usuarios que siguen a RN)
+seguidores_nadal = get_followers("RafaelNadal")
+
+#amigos de usuario de twitter Federer
+amigos_federer = get_friends("rogerfederer")
+#seguidores de Federer
+seguidores_federer  = get_followers("rogerfederer")
+
+#grafico
+venn.plot = venn.diagram(
+  x = list(nadal = amigos_nadal$user_id,
+           federer = amigos_federer$user_id), #armo una lista con los amigos de nadal y de federer
+  filename = "amigos_fed_nad.png", # doy nombre al archivo de salida q es una imagen
+  fill = c("red3", "orange"), #rellenar con color uno para cada elemento de la lista
+  alpha = 0.50, #nivel de transparencia para ver el solapamiento entre los dos
+  cex = 2.5) #tamaño de letra por defecto es 1
